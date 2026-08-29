@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import Home from "../pages/Home"
 import MainLayout from "../layouts/MainLayout"
+import NotFound from "../pages/NotFound"
 const RouterConfig=createBrowserRouter([
     {
         path:"/",
@@ -11,6 +12,11 @@ const RouterConfig=createBrowserRouter([
                 element:<Home/>
             }
         ]
+    },
+    {
+        path:"*",
+        element:<NotFound/>
+
     }
 ])
 export default RouterConfig
