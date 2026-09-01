@@ -34,7 +34,7 @@ const RouterConfig=createBrowserRouter([
                         element:<Star/>
                     },
                     {
-                        
+                        path:""
                     }
                 ]
             }
