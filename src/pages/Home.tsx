@@ -1,7 +1,7 @@
 import styles from "./Home.module.scss"
 import {useNavigate} from "react-router-dom"
 import {Typography,Button} from "antd"
-import { HOME_PATHNAME } from "../router"
+import {  MANAGE_INDEX_PATHNAME } from "../router"
 
 function Home(){
     const{Title,Paragraph}=Typography
@@ -12,7 +12,7 @@ function Home(){
                 <Title>问卷调查 | 在线投票</Title>
                 <Paragraph>已累计创建问卷100份，发布问卷90份，收到答卷980份</Paragraph>
                 <div>
-                    <Button type="primary" onClick={()=>nav(HOME_PATHNAME)}>
+                    <Button type="primary" onClick={()=>nav(MANAGE_INDEX_PATHNAME)}>
                         开始使用
                     </Button>
                 </div>

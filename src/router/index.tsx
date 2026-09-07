@@ -1,40 +1,44 @@
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Navigate } from "react-router-dom"
 import Home from "../pages/Home"
 import MainLayout from "../layouts/MainLayout"
+import ManageLayout from "../layouts/ManageLayout"
 import NotFound from "../pages/NotFound"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
+import List from "../pages/manage/List"
+import Star from "../pages/manage/Star"
 const RouterConfig=createBrowserRouter([
     {
         path:"/",
         element:<MainLayout/>,
         children:[
             {
-                path:"/",
+                index:true,
                 element:<Home/>
             },
             {
-                path:"/login",
+                path:"login",
                 element:<Login/>
             },
             {
-                path:"/register",
+                path:"register",
                 element:<Register/>
             },
             {
-                path:"/manage",
+                path:"manage",
                 element:<ManageLayout/>,
                 children:[
                     {
-                        path:"/list",
+                        index:true,
+                        element:<Navigate to="/manage/list" replace/>
+                    },
+                    {
+                        path:"list",
                         element:<List/>
                     },
                     {
-                        path:"/star",
+                        path:"star",
                         element:<Star/>
-                    },
-                    {
-                        path:""
                     }
                 ]
             }
@@ -50,3 +54,4 @@ export default RouterConfig
 export const HOME_PATHNAME="/"
 export const LOGIN_PATHNAME="/login"
 export const MANAGE_INDEX_PATHNAME="/manage/list"
+export const REGISTER_PATHNAME="/register"

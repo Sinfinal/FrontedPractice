@@ -7,7 +7,7 @@ import styles from "./ManageLayout.module.scss"
 
 function ManageLayout(){
     const nav=useNavigate()
-    const {pathnmae}=useLocation()
+    const {pathname}=useLocation()
     const {loading,run:handleCreateClick}=useRequest(createQuestionService,{
         manual:true,
         onSuccess(result){
