@@ -11,3 +11,9 @@ export async function registerService(username:string,password:string,nickname:s
     const data=(await axios.post("/api/user/register",body)) as ResDataType
     return data
 }
+export async function getUserInfoService(username:string,password:string):Promise<ResDataType>{
+    const url="/api/user/login"
+    const body={username,password}
+    const data =(await axios.post(url,body)) as ResDataType
+    return data
+}
