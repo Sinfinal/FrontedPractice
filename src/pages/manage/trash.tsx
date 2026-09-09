@@ -4,7 +4,7 @@ import useLoadQuestionListData from "../../hooks/useLoadQuestionListData"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import styles from "./Common.module.scss"
-import useRequest from "ahooks"
+import { useRequest } from "ahooks"
 import { Tag,message,Modal, Typography, Empty ,Spin,Space,Button,Table} from "antd"
 import ListPage from "../../components/ListPage"
 import ListSearch from "../../components/ListSearch"
@@ -75,7 +75,7 @@ function Trash(){
         },
         {
             manual:true,
-            debounce:500,
+            debounceWait:500,
             onSuccess(){
                 message.success("恢复成功")
                 refresh()
