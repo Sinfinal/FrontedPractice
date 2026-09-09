@@ -21,3 +21,13 @@ export async function getQuestionListService(opt:Partial<SearchOption>={}):Promi
     return data
 
 }
+export async function updateQuestionService(id:string,opt:Record<string,unknown>){
+    const url=`/api/question/${id}`
+    const data=(await axios.patch(url,opt)) as ResDataType
+    return data
+}
+export async function deleteQuestionService(ids:string[]):Promise<ResDataType>{
+    const url="/api/question"
+    const data=(await axios.delete(url,{data:{ids}})) as ResDataType
+    return data
+}

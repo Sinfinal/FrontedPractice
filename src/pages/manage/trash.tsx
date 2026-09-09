@@ -8,6 +8,7 @@ import useRequest from "ahooks"
 import { Tag,message,Modal, Typography, Empty ,Spin,Space,Button,Table} from "antd"
 import ListPage from "../../components/ListPage"
 import ListSearch from "../../components/ListSearch"
+import { updateQuestionService,deleteQuestionService } from "../../service/question"
 type QuestionItem = {
     _id: string
     title: string
@@ -54,9 +55,7 @@ function Trash(){
             dataIndex:"createAt"
         }
     ]
-    const {run:recover}=useRequest(async()=>{
-        for await(const id of selectedIds)
-    }
+    const {run:deleteQuestion}=useRequest(async()=>await deleteQuestionService(selectedIds),
         
         {
             manual:true,
@@ -70,7 +69,18 @@ function Trash(){
     
     const {run:recover}=useRequest(
         async()=>{
-            for await
+            for await (const id of selectedIds){
+                await updateQuestionService(id,{isDeleted:false})
+            }
+        },
+        {
+            manual:true,
+            debounce:500,
+            onSuccess(){
+                message.success("恢复成功")
+                refresh()
+                SetSelectedIds([])
+            }
         }
     )
     const TableElem=<>
@@ -80,7 +90,7 @@ function Trash(){
             <Button danger disabled={selectedIds.length===0} onClick={()=>del()}>彻底删除</Button>
         </Space>
     </div>
-    <Table></Table>
+    <Table dataSource={list} columns={tableColumns} pagination={false} rowKey={q=>q._id} rowSelection={{type:"checkbox",onChange:selectedRowKeys=>{SetSelectedIds(selectedRowKeys as string[])}}} ></Table>
     </>
     return (
         <>
