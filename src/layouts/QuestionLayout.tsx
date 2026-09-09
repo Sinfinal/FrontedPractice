@@ -1,5 +1,6 @@
 import { Spin } from "antd"
 import { Outlet } from "react-router-dom"
+import useLoadUserData from "../hooks/useLoadUserData"
 function QuestionLayout(){
     const {waitingUserData}=useLoadUserData()
     

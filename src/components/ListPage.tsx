@@ -21,7 +21,7 @@ function ListPage(props:PropsType){
             search:searchParams.toString()
         })
     }
-
+ 
     return <Pagination current={current} pageSize={pageSize} total={total} onChange={handlePageChange}/>
 }
 export default ListPage

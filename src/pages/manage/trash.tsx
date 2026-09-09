@@ -5,7 +5,9 @@ import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import styles from "./Common.module.scss"
 import useRequest from "ahooks"
-import { Tag,message } from "antd"
+import { Tag,message,Modal, Typography, Empty ,Spin,Space,Button,Table} from "antd"
+import ListPage from "../../components/ListPage"
+import ListSearch from "../../components/ListSearch"
 type QuestionItem = {
     _id: string
     title: string
@@ -13,10 +15,12 @@ type QuestionItem = {
     answerCount: number
     createdAt: string
 }
+const {confirm}=Modal
+const {Title}=Typography
 function Trash(){
 
     useTitle("老哥爱回收")
-    const {data={},loading,refresh}=useLoadQuestionListData({isDeleted=true})
+    const {data={},loading,refresh}=useLoadQuestionListData({isDeleted:true})
     const {list=[],total=0}=data as {list?:QuestionItem[],total?:number}
     const [selectedIds,SetSelectedIds]=useState<string[]>([])
     function del(){
@@ -50,7 +54,9 @@ function Trash(){
             dataIndex:"createAt"
         }
     ]
-    const {run:recover}=useRequest(
+    const {run:recover}=useRequest(async()=>{
+        for await(const id of selectedIds)
+    }
         
         {
             manual:true,
@@ -67,11 +73,39 @@ function Trash(){
             for await
         }
     )
-
+    const TableElem=<>
+    <div style={{marginBottom:"16px"}}>
+        <Space>
+            <Button type="primary" disabled={selectedIds.length===0} onClick={recover}>恢复</Button>
+            <Button danger disabled={selectedIds.length===0} onClick={()=>del()}>彻底删除</Button>
+        </Space>
+    </div>
+    <Table></Table>
+    </>
     return (
         <>
         <div className={styles.header}>
-
+            <div className={styles.left}>
+                <Title level={3}>回收站</Title>
+            </div>
+            <div className={styles.right}>
+                <ListSearch/>
+            </div>
+        </div>
+        <div className={styles.content}>
+            {
+                loading&&(<div style={{textAlign:"center"}}><Spin/></div>)
+            }
+            {
+                !loading&&list.length===0&&<Empty description="暂无数据"/>
+                
+            }
+            {
+                list.length>0&&TableElem
+            }
+        </div>
+        <div className={styles.footer}>
+            <ListPage total={total}/>
         </div>
         </>
     )
