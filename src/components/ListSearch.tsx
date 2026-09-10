@@ -27,5 +27,6 @@ function ListSearch(){
     return (
         <Search placeholder="请输入关键字" value={value} onChange={handleChange} onSearch={handleSearch} size="large" style={{width:"200px"}} allowClear/>
     )
+    
 }
 export default ListSearch

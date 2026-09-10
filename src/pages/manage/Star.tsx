@@ -37,14 +37,12 @@ function Star(){
             {
                 !loading &&list.length===0&&<Empty description="暂无数据"/>
             }
-
             {
                 list.length>0&&list.map((question:QuestionItem)=>{
 
                     const {_id}=question
                     return <QuestionCard key={_id} {...question}/>
                 })
-
             }
         </div>
         <div className={styles.footer}>
