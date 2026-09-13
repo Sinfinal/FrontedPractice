@@ -1,4 +1,4 @@
-import { LOGIN_PATHNAME } from "../router"
+import { LOGIN_PATHNAME } from "../router/paths"
 import {Link, useNavigate} from "react-router-dom"
 import useGetUserInfo from "../hooks/useGetUserInfo"
 import { useDispatch } from "react-redux"

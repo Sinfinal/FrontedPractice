@@ -1,7 +1,7 @@
 import styles from "./Home.module.scss"
 import {useNavigate} from "react-router-dom"
 import {Typography,Button} from "antd"
-import {  MANAGE_INDEX_PATHNAME } from "../router"
+import {  MANAGE_INDEX_PATHNAME } from "../router/paths"
 
 function Home(){
     const{Title,Paragraph}=Typography

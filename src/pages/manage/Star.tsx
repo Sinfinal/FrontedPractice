@@ -18,7 +18,7 @@ function Star(){
 
     useTitle("老哥问卷-星标问卷")
     const {data=[],loading}=useLoadQuestionListData()
-    const {list=[],total=0}=data
+    const {list=[],total=0}=data as {list?:QuestionItem[],total?:number}
     return (
         <>
 

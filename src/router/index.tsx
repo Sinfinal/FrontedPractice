@@ -8,6 +8,9 @@ import Register from "../pages/Register"
 import List from "../pages/manage/List"
 import Star from "../pages/manage/Star"
 import Trash from "../pages/manage/trash"
+import QuestionLayout from "../layouts/QuestionLayout"
+import Edit from "../pages/question/Edit"
+import Stat from "../pages/question/Stat"
 const RouterConfig=createBrowserRouter([
     {
         path:"/",
@@ -44,6 +47,23 @@ const RouterConfig=createBrowserRouter([
                     {
                         path:"trash",
                         element:<Trash/>
+                    },
+                    {
+                        path:"edit"
+                    }
+                ]
+            },
+            {
+                path:"question",
+                element:<QuestionLayout/>,
+                children:[
+                    {
+                        path:"edit/:id",
+                        element:<Edit/>
+                    },
+                    {
+                        path:"stat/:id",
+                        element:<Stat/>
                     }
                 ]
             }
@@ -56,16 +76,3 @@ const RouterConfig=createBrowserRouter([
     }
 ])
 export default RouterConfig
-export const HOME_PATHNAME="/"
-export const LOGIN_PATHNAME="/login"
-export const MANAGE_INDEX_PATHNAME="/manage/list"
-export const REGISTER_PATHNAME="/register"
-
-export function isLoginOrRegister(pathname:string){
-    if([LOGIN_PATHNAME,REGISTER_PATHNAME].includes(pathname))return true
-    return false
-}
-export function isNoNeedUserInfo(pathname:string){
-    if ([HOME_PATHNAME,LOGIN_PATHNAME,REGISTER_PATHNAME].includes(pathname))return true
-    return false
-}

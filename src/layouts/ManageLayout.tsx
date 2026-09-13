@@ -11,7 +11,8 @@ function ManageLayout(){
     const {loading,run:handleCreateClick}=useRequest(createQuestionService,{
         manual:true,
         onSuccess(result){
-            nav(`question/edit/${result.id}`)
+            const id=(result as {id?:string}).id||""
+            nav(`/question/edit/${id}`)
             message.success("创建成功")
         }
     })

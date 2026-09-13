@@ -2,7 +2,7 @@ import { Typography,Space ,Form,Input,Button,Checkbox,message} from "antd"
 import {useNavigate,Link} from "react-router-dom"
 import styles from "./Login.module.scss"
 import { UserAddOutlined } from "@ant-design/icons"
-import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from "../router"
+import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from "../router/paths"
 import { useEffect } from "react"
 import { useRequest } from "ahooks"
 import { loginService } from "../service/user"
@@ -30,21 +30,21 @@ function Login(){
     useEffect(()=>{
         const {username,password}=getUserInformStorage()
         form.setFieldsValue({username,password})
-    },[])
+    },[form])
     const {run}=useRequest(async(username,password)=>{
         const data=loginService(username,password)
         return data
     },{
         manual:true,
         onSuccess(data){
-            const {token}=data
+            const token=(data as {token?:string}).token||""
             setToken(token)
             message.success("登录成功")
             nav(MANAGE_INDEX_PATHNAME)
         }
     })
-    function onFinish(value){
-        const {username,password,remember}=value
+    function onFinish(value: { username?: string; password?: string; remember?: boolean }) {
+        const {username="",password="",remember}=value
         run(username,password)
         if (remember){
             rememberUser(username,password)

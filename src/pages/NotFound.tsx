@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import {Button,Result} from "antd"
-import { MANAGE_INDEX_PATHNAME } from "../router"
+import { MANAGE_INDEX_PATHNAME } from "../router/paths"
 function NotFound(){
     const nav=useNavigate()
     return (

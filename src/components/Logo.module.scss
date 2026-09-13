@@ -1,16 +1,11 @@
 .container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
     width: 200px;
     margin: 12px 0;
     line-height: 1;
     text-align: center;
-    color: inherit;
-    .title {
-        margin: 0;
+
+    h1 {
         font-size: 32px;
         color: #f7f7f7;
-        line-height: 1;
     }
 }

@@ -1,6 +1,6 @@
 import { UserAddOutlined } from "@ant-design/icons"
 import { Space ,Typography,Form,Input,Button,message} from "antd"
-import { LOGIN_PATHNAME } from "../router"
+import { LOGIN_PATHNAME } from "../router/paths"
 import styles from "./Register.module.scss"
 import { Link, useNavigate } from "react-router-dom"
 import { useRequest } from "ahooks"
@@ -18,7 +18,7 @@ function Register(){
             nav(LOGIN_PATHNAME)
         }
     })
-    const onFinish=(values)=>{
+    const onFinish=(values: {username?: string; password?: string; nickname?: string; confirm?: string})=>{
         run(values)
     }
     return (

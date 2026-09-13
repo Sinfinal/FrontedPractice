@@ -18,7 +18,7 @@ type QuestionItem={
 const {Title} =Typography
 function List(){
     useTitle("老哥问卷，懂你的问卷")
-    const [list,setList]=useState([])
+    const [list,setList]=useState<QuestionItem[]>([])
     const [started,setStarted]=useState(false)
     const [total,setTotal]=useState(0)
     const [page,setPage]=useState(1)
@@ -32,9 +32,10 @@ function List(){
     },{
         manual:true,
         onSuccess(data){
-            const {list:l=[],total}=data
+            const list=(data.list as QuestionItem[]|undefined)||[]
+            const total=(data.total as number)||0
             setTotal(total)
-            setList(l)
+            setList(list)
             setPage(page+1)
         }
     })
@@ -53,7 +54,7 @@ function List(){
     })
     useEffect(()=>{
         tryLoadMore()
-    },[searchParams])
+    },[searchParams, tryLoadMore])
     useEffect(()=>{
         if (haveMoreData){
             window.addEventListener("scroll",tryLoadMore)
@@ -62,7 +63,7 @@ function List(){
             window.removeEventListener("scroll",tryLoadMore)
         }
     }
-    ,[searchParams,haveMoreData])
+    ,[searchParams, haveMoreData, tryLoadMore])
     const LoadMoreContentElem=useMemo(()=>{
         if (!started||loading)return <Spin></Spin>
         if (total==0)return <Empty description="暂无数据"/>

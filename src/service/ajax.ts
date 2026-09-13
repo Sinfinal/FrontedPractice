@@ -1,4 +1,5 @@
 import axios from "axios"
+import type { AxiosResponse } from "axios"
 import {message} from "antd"
 import { getToken } from "../utils/user-token"
 
@@ -23,7 +24,7 @@ instance.interceptors.response.use(
             }
             throw new Error(msg)
         }
-        return data as any
+        return data as unknown as AxiosResponse
     }
 )
 export default instance
@@ -33,5 +34,5 @@ export type ResType={
     msg?:string
 }
 export type ResDataType={
-    [key:string]:any
+    [key:string]:unknown
 }

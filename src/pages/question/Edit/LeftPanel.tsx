@@ -1,16 +1,31 @@
-import { AppstoreAddOutlined } from "@ant-design/icons";
+import { AppstoreAddOutlined, BarsOutlined } from "@ant-design/icons";
+import { Tabs } from "antd";
+import ComponentLib from "./ComponentLib";
 
-function LeftPanel(){
-    const tabsItems=[
+function LeftPanel() {
+    const tabsItems = [
         {
-            key:"componentLib",
-            label:(
+            key: "componentLib",
+            label: (
                 <span>
-                    <AppstoreAddOutlined/>
+                    <AppstoreAddOutlined />
                     组件库
                 </span>
             ),
-            children:<ComponentLib/>
-        }
-    ]
+            children: <ComponentLib />,
+        },
+        {
+            key: "layers",
+            label: (
+                <span>
+                    <BarsOutlined />
+                    图层
+                </span>
+            ),
+            children: <div>图层</div>,
+        },
+    ];
+    return <Tabs defaultActiveKey="componentLib" items={tabsItems} />;
 }
+
+export default LeftPanel

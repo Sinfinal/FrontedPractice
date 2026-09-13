@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import useGetUserInfo from "./useGetUserInfo"
-import { isLoginOrRegister, isNoNeedUserInfo, LOGIN_PATHNAME, MANAGE_INDEX_PATHNAME } from "../router"
+import { isLoginOrRegister, isNoNeedUserInfo, LOGIN_PATHNAME, MANAGE_INDEX_PATHNAME } from "../router/paths"
 import { useEffect } from "react"
 function useNavPage(waitingUserData:boolean){
     const {username}=useGetUserInfo()
@@ -9,7 +9,7 @@ function useNavPage(waitingUserData:boolean){
     useEffect(()=>{
         if (waitingUserData)return
         if (username){
-            if (isLoginOrRegister){
+            if (isLoginOrRegister(pathname)){
                 nav(MANAGE_INDEX_PATHNAME)
             }
             return 
