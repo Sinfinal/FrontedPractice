@@ -1,7 +1,8 @@
 import type { ComponentPropsType } from "../../components/QuestionComponents"
-import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
-import { getNextSelectedId } from "./utils"
+import {createSlice, nanoid, type PayloadAction} from "@reduxjs/toolkit"
+import { getNextSelectedId, insertNewComponent } from "./utils"
 import cloneDeep from 'lodash.clonedeep'
+import { arrayMove } from "@dnd-kit/sortable"
 export type ComponentInfoType={
     fe_id:string
     type:string
@@ -85,13 +86,50 @@ export const componentsSlice=createSlice({
         },
         pasteCopiedComponent:(state:ComponentsStateType)=>{
             const {copiedComponent}=state
-            if(copiedComponent==null){
-                
-            }
+            if(copiedComponent==null)return
+            copiedComponent.fe_id=nanoid()
+            insertNewComponent(state,copiedComponent)
+        },
+        selectPrevComponent:(state:ComponentsStateType)=>{
+            const {selectedId,componentList}=state
+            const selectedIndex=componentList.findIndex(c=>c.fe_id===selectedId)
+            if(selectedIndex<0)return
+            if(selectedIndex<=0)return
+            state.selectedId=componentList[selectedIndex-1].fe_id
+        },
+        selectNextComponent:(state:ComponentsStateType)=>{
+            const {selectedId,componentList}=state
+            const selectedIndex=componentList.findIndex(c=>c.fe_id===selectedId)
+            if (selectedIndex<0)return 
+            if(selectedIndex+1===componentList.length)return
+            state.selectedId=componentList[selectedIndex+1].fe_id
+        },
+        changeComponentTitle:(state:ComponentsStateType,action:PayloadAction<{fe_id:string,title:string}>)=>{
+            const {title,fe_id}=action.payload
+            const curComp=state.componentList.find(c=>c.fe_id===fe_id)
+            if(curComp)curComp.title=title
+        },
+        moveComponent:(state:ComponentsStateType,action:PayloadAction<{oldIndex:number,newIndex:number}>)=>{
+            const {componentList:curComponentList}=state
+            const {oldIndex,newIndex}=action.payload
+            state.componentList=arrayMove(curComponentList,oldIndex,newIndex)
         }
-
 
     }
 })
-export const {resetComponents,changeSelectedId,addComponent,changeComponentProps,removeSelectedComponent}=componentsSlice.actions
+export const {
+  resetComponents,
+  changeSelectedId,
+  addComponent,
+  changeComponentProps,
+  removeSelectedComponent,
+  changeComponentHidden,
+  toggleComponentLocked,
+  copySelectedComponent,
+  pasteCopiedComponent,
+  selectPrevComponent,
+  selectNextComponent,
+  changeComponentTitle,
+  moveComponent,
+} = componentsSlice.actions
 export default componentsSlice.reducer
